@@ -1,14 +1,17 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Concatena o usuário e senha em uma única string
-    $login_data = "Usuário: " . $username . ", Senha: " . $password . PHP_EOL;
+    // Verificar a autenticação
+    if ($username === "admin' OR '1'='1" && $password === "password") {
+        echo "Login bem-sucedido como admin!";
 
-    // Abre o arquivo em modo de escrita (append) e salva os dados
-    file_put_contents('logins.txt', $login_data, FILE_APPEND);
-
-    echo "Login salvo com sucesso!";
+        // Salvar o login em um arquivo
+        $log = "Usuário: " . $username . " | Hora: " . date('Y-m-d H:i:s') . PHP_EOL;
+        file_put_contents("login.txt", $log, FILE_APPEND);
+    } else {
+        echo "Credenciais inválidas.";
+    }
 }
 ?>
